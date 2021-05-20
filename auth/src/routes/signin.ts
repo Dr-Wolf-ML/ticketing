@@ -1,25 +1,25 @@
-import express, { Request, Response } from "express";
-import { body } from "express-validator";
-import jwt from "jsonwebtoken";
+import express, { Request, Response } from 'express';
+import { body } from 'express-validator';
+import jwt from 'jsonwebtoken';
 
-import { validateEmailPwdRequest } from "../middlewares/validate-email-pwd-request";
+import { validateEmailPwdRequest } from '../middlewares/validate-email-pwd-request';
 
-import { BadRequestError } from "../errors/bad-request-error";
+import { BadRequestError } from '../errors/bad-request-error';
 
-import { User } from "../models/user";
+import { User } from '../models/user';
 
-import { Password } from "../services/password";
+import { Password } from '../services/password';
 
 const router = express.Router();
 
 router.post(
-  "/api/users/signin",
+  '/api/users/signin',
   [
-    body("email").isEmail().withMessage("Invalid email or password"),
-    body("password")
+    body('email').isEmail().withMessage('Invalid email or password'),
+    body('password')
       .trim() //remove leading and trailing spaces
       .notEmpty()
-      .withMessage("Invalid email or password"),
+      .withMessage('Invalid email or password'),
   ],
   validateEmailPwdRequest,
   async (req: Request, res: Response) => {
@@ -29,7 +29,7 @@ router.post(
 
     // user does not exist
     if (!existingUser) {
-      throw new BadRequestError("Invalid email or password");
+      throw new BadRequestError('Invalid email or password');
     }
 
     // compare supplied and stored passwords
@@ -38,7 +38,7 @@ router.post(
       password
     );
     if (!passwordMatch) {
-      throw new BadRequestError("Invalid email or password");
+      throw new BadRequestError('Invalid email or password');
     }
 
     // generate JWT

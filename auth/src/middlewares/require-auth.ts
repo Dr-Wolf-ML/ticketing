@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express';
 
-import { NotAuthorisedError } from "../errors/not-authorised-error";
+import { NotAuthorisedError } from '../errors/not-authorised-error';
 
 // assumes that currentUser Middleware is run prior to this
 export const requireAuth = (
