@@ -8,19 +8,18 @@ import { currentUserRouter } from './routes/current-user';
 import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
-import { errorHandler } from './middlewares/error-handler';
 
-// Errors
-import { NotFoundError } from './errors/not-found-error';
+// from common NPM repo
+import { errorHandler, NotFoundError } from '@dr-wolf-at-npm/common-for-tix';
 
 const app = express();
 app.set('trust proxy', true);
 app.use(json());
 app.use(
-  cookieSession({
-    signed: false,
-    secure: process.env.NODE_ENV !== 'test',
-  })
+    cookieSession({
+        signed: false,
+        secure: process.env.NODE_ENV !== 'test',
+    }),
 );
 
 app.use(currentUserRouter);
@@ -30,7 +29,7 @@ app.use(signupRouter);
 
 // Bad Route - Page not found
 app.all('*', () => {
-  throw new NotFoundError();
+    throw new NotFoundError();
 });
 
 app.use(errorHandler);
