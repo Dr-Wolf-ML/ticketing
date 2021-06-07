@@ -18,6 +18,7 @@ const start = async () => {
         console.error('No process.env.MONGO_URI found !!');
         throw new Error('No process.env.MONGO_URI found !!');
     }
+
     try {
         await mongoose.connect(process.env.MONGO_URI, {
             useNewUrlParser: true,

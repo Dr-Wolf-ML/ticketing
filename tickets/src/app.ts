@@ -4,13 +4,17 @@ import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 
 // Routing
-import { currentUserRouter } from './routes/current-user';
-import { signinRouter } from './routes/signin';
-import { signoutRouter } from './routes/signout';
-import { signupRouter } from './routes/signup';
+import { createTicketRouter } from '../routes/new';
+// import { signinRouter } from './routes/signin';
+// import { signoutRouter } from './routes/signout';
+// import { signupRouter } from './routes/signup';
 
 // from common NPM repo
-import { errorHandler, NotFoundError } from '@dr-wolf-at-npm/common-for-tix';
+import {
+    errorHandler,
+    NotFoundError,
+    currentUser,
+} from '@dr-wolf-at-npm/common-for-tix';
 
 const app = express();
 app.set('trust proxy', true);
@@ -22,10 +26,12 @@ app.use(
     }),
 );
 
-app.use(currentUserRouter);
-app.use(signinRouter);
-app.use(signoutRouter);
-app.use(signupRouter);
+app.use(currentUser);
+
+app.use(createTicketRouter);
+// app.use(signinRouter);
+// app.use(signoutRouter);
+// app.use(signupRouter);
 
 // Bad Route - Page not found 404
 app.all('*', () => {
