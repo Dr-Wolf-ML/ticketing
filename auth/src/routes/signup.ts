@@ -3,7 +3,7 @@ import { body } from 'express-validator';
 import jwt from 'jsonwebtoken';
 
 import {
-    validateEmailPwdRequest,
+    validateRequest,
     BadRequestError,
 } from '@dr-wolf-at-npm/common-for-tix';
 
@@ -20,7 +20,7 @@ router.post(
             .isLength({ min: 4, max: 20 })
             .withMessage('Your password must have 4-20 characters'),
     ],
-    validateEmailPwdRequest,
+    validateRequest,
     async (req: Request, res: Response) => {
         const { email, password } = req.body;
 

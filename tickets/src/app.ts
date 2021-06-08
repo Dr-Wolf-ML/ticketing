@@ -4,7 +4,7 @@ import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 
 // Routing
-import { createTicketRouter } from '../routes/new';
+import { createTicketRouter } from './routes/new';
 // import { signinRouter } from './routes/signin';
 // import { signoutRouter } from './routes/signout';
 // import { signupRouter } from './routes/signup';

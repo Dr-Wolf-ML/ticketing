@@ -3,7 +3,7 @@ import { body } from 'express-validator';
 import jwt from 'jsonwebtoken';
 
 import {
-    validateEmailPwdRequest,
+    validateRequest,
     BadRequestError,
 } from '@dr-wolf-at-npm/common-for-tix';
 
@@ -22,7 +22,7 @@ router.post(
             .notEmpty()
             .withMessage('Invalid email or password'),
     ],
-    validateEmailPwdRequest,
+    validateRequest,
     async (req: Request, res: Response) => {
         const { email, password } = req.body;
 
