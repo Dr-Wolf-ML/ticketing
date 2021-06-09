@@ -5,7 +5,7 @@ import cookieSession from 'cookie-session';
 
 // Routing
 import { createTicketRouter } from './routes/new';
-// import { signinRouter } from './routes/signin';
+import { showTicketRouter } from './routes/show';
 // import { signoutRouter } from './routes/signout';
 // import { signupRouter } from './routes/signup';
 
@@ -29,7 +29,7 @@ app.use(
 app.use(currentUser);
 
 app.use(createTicketRouter);
-// app.use(signinRouter);
+app.use(showTicketRouter);
 // app.use(signoutRouter);
 // app.use(signupRouter);
 

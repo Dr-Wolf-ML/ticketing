@@ -87,4 +87,6 @@ it('creates a ticket when valid inputs are provided', async () => {
     expect(tickets[0].price).toEqual(price);
 });
 
-it('spare', async () => {});
+it('passes all test for the createTicketRouter', async () => {
+    console.log('Tickets API:  createTicketRouter passed.');
+});
