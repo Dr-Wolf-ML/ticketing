@@ -2,8 +2,7 @@ import request from 'supertest';
 import mongoose from 'mongoose';
 
 import { app } from '../../app';
-import { Ticket } from '../../models/ticket';
-import { body } from 'express-validator';
+import { response } from 'express';
 
 it('returns a 404 if the ticket is not found', async () => {
     //* Arrange
@@ -42,14 +41,6 @@ it('returns the ticket if the ticket is found', async () => {
     expect(findTicketResponse.body.title).toEqual(title);
     expect(findTicketResponse.body.price).toEqual(price);
 });
-
-it('spare', async () => {});
-
-it('spare', async () => {});
-
-it('spare', async () => {});
-
-it('spare', async () => {});
 
 it('passes all test for the showTicketRouter', async () => {
     console.log('Tickets API:  showTicketRouter passed.');

@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { app } from './app';
 
 const start = async () => {
-    console.info('Starting up Auth Service...');
+    console.info('Starting up Tickets Service...');
 
     // Check that a JWT_Key secret exists...
     if (!process.env.JWT_KEY) {
@@ -31,7 +31,7 @@ const start = async () => {
     }
 
     app.listen(3000, () => {
-        console.log('Auth Service listening on port 3000...');
+        console.log('Tickets Service listening on port 3000...');
     });
 };
 

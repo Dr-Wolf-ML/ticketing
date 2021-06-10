@@ -39,9 +39,12 @@ afterAll(async () => {
 
 // a global function for auth
 global.signin = () => {
+    // Generate a new User ID
+    const newRandomlyGeneratedId = new mongoose.Types.ObjectId().toHexString();
+
     // Build a JWT payload:  { id, email}
     const payload = {
-        id: '12341234',
+        id: newRandomlyGeneratedId,
         email: 'test@test.com',
     };
     // Create the JWT!

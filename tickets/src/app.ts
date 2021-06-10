@@ -6,8 +6,8 @@ import cookieSession from 'cookie-session';
 // Routing
 import { createTicketRouter } from './routes/new';
 import { showTicketRouter } from './routes/show';
-// import { signoutRouter } from './routes/signout';
-// import { signupRouter } from './routes/signup';
+import { indexTicketRouter } from './routes/index';
+import { updateTicketRouter } from './routes/update';
 
 // from common NPM repo
 import {
@@ -30,8 +30,8 @@ app.use(currentUser);
 
 app.use(createTicketRouter);
 app.use(showTicketRouter);
-// app.use(signoutRouter);
-// app.use(signupRouter);
+app.use(indexTicketRouter);
+app.use(updateTicketRouter);
 
 // Bad Route - Page not found 404
 app.all('*', () => {
