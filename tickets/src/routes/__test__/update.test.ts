@@ -167,7 +167,7 @@ it('updates the ticket provided valid inputs and returns a 200', async () => {
         .send()
         .expect(200);
 
-    //* Assert #2
+    //* Assert
     expect(foundUpdatedTicket.body.title).toEqual('Updated Test Title');
     expect(foundUpdatedTicket.body.price).toEqual(20);
 });

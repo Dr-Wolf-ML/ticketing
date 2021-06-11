@@ -17,6 +17,10 @@ router.put(
     [
         body('title').not().isEmpty().withMessage('A Title is required'),
         body('title').isString().withMessage('Title cannot be ot type Number'),
+        body('title')
+            .not()
+            .isNumeric()
+            .withMessage('Price cannot be of type Number'),
         body('price').not().isEmpty().withMessage('A Price is required'),
         body('price').isFloat({ gt: 0 }).withMessage('Price must be > $0.00'),
         body('price')
