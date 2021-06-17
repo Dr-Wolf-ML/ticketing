@@ -4,13 +4,14 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "publish": "ts-node-dev --rs --notify false src/publisher.ts",
-        "listen": "ts-node-dev --rs --notify false src/listener.ts"
+        "publish": "ts-node-dev --rs --notify false src/publisher-service.ts",
+        "listen": "ts-node-dev --rs --notify false src/listener-service.ts"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@dr-wolf-at-npm/common-for-tix": "^1.1.0",
         "@types/node": "^15.12.2",
         "node-nats-streaming": "^0.3.2",
         "ts-node-dev": "^1.1.6",

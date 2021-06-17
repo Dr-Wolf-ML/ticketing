@@ -2,15 +2,16 @@ import request from 'supertest';
 import mongoose from 'mongoose';
 
 import { app } from '../../app';
-import { response } from 'express';
+import { natsWrapper } from '../../nats-wrapper';
 
 it('returns a 404 if the provided id is does not exist', async () => {
     //* Arrange
-    const newRandomlyGeneratedId = new mongoose.Types.ObjectId().toHexString();
+    const newRandomlyGeneratedTicketId =
+        new mongoose.Types.ObjectId().toHexString();
 
     //* Act
     const response = await request(app)
-        .put(`/api/tickets/${newRandomlyGeneratedId}`)
+        .put(`/api/tickets/${newRandomlyGeneratedTicketId}`)
         .set('Cookie', global.signin())
         .send({
             title: 'Test Title',
@@ -23,11 +24,12 @@ it('returns a 404 if the provided id is does not exist', async () => {
 
 it('returns a 401 if the user is not authenticated', async () => {
     //* Arrange
-    const newRandomlyGeneratedId = new mongoose.Types.ObjectId().toHexString();
+    const newRandomlyGeneratedTicketId =
+        new mongoose.Types.ObjectId().toHexString();
 
     //* Act
     const response = await request(app)
-        .put(`/api/tickets/${newRandomlyGeneratedId}`)
+        .put(`/api/tickets/${newRandomlyGeneratedTicketId}`)
         //! .set('Cookie', global.signin())
         .send({
             title: 'Test Title',
@@ -170,6 +172,49 @@ it('updates the ticket provided valid inputs and returns a 200', async () => {
     //* Assert
     expect(foundUpdatedTicket.body.title).toEqual('Updated Test Title');
     expect(foundUpdatedTicket.body.price).toEqual(20);
+});
+
+it('publishes an update ticket event', async () => {
+    //* Arrange
+    const cookie = global.signin();
+
+    // create a ticket
+    const response = await request(app)
+        .post('/api/tickets')
+        .set('Cookie', cookie)
+        .send({
+            title: 'Test Title',
+            price: 10,
+        })
+        .expect(201);
+
+    //* Act
+    // update ticket
+    const response2 = await request(app)
+        .put(`/api/tickets/${response.body.id}`)
+        .set('Cookie', cookie)
+        .send({
+            title: 'Updated Test Title',
+            price: 20,
+        })
+        //* Assert
+        .expect(200);
+
+    // Assert
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
+    expect(natsWrapper.client.publish).toBeCalledTimes(2);
+    expect(natsWrapper.client.publish).toHaveBeenNthCalledWith(
+        2,
+        'ticket:updated',
+        expect.any(String),
+        expect.any(Function),
+    );
+    expect(natsWrapper.client.publish).toHaveBeenNthCalledWith(
+        2,
+        'ticket:updated',
+        `{\"id\":\"${response2.body.id}\",\"title\":\"${response2.body.title}",\"price\":${response2.body.price},\"userId\":\"${response2.body.userId}\"}`,
+        expect.any(Function),
+    );
 });
 
 it('passes all test for the updateTicketRouter', async () => {

@@ -6,11 +6,12 @@ import { response } from 'express';
 
 it('returns a 404 if the ticket is not found', async () => {
     //* Arrange
-    const newRandomlyGeneratedId = new mongoose.Types.ObjectId().toHexString();
+    const newRandomlyGeneratedTicketId =
+        new mongoose.Types.ObjectId().toHexString();
 
     //* Act
     const response = await request(app)
-        .get(`/api/tickets/${newRandomlyGeneratedId}`)
+        .get(`/api/tickets/${newRandomlyGeneratedTicketId}`)
         .send();
 
     //* Assert
