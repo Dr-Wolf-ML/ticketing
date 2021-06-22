@@ -26,12 +26,6 @@ it('can fetch a list of tickets', async () => {
     expect(response.body.length).toEqual(3);
 });
 
-it('spare', async () => {});
-
-it('spare', async () => {});
-
-it('spare', async () => {});
-
 it('passes all test for the indexTicketRouter', async () => {
     console.log('Tickets API:  indexTicketRouter passed.');
 });
