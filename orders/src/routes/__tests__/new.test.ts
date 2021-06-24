@@ -5,8 +5,7 @@ import { app } from '../../app';
 import { Order } from '../../models/order';
 import { Ticket } from '../../models/ticket';
 import { natsWrapper } from '../../nats-wrapper';
-import { currentUser, OrderStatus } from '@dr-wolf-at-npm/common-for-tix';
-import { body } from 'express-validator';
+import { OrderStatus } from '@dr-wolf-at-npm/common-for-tix';
 
 it('has a route handler listening to /api/tickets for order requests', async () => {
     const response = await request(app).post('/api/orders').send({});
@@ -120,7 +119,27 @@ it('reserves a ticket', async () => {
         .expect(201);
 });
 
-it.todo('publishes a new order:created event');
+it('publishes a new order:created event', async () => {
+    // Arrange
+    // - create a new Ticket and save it to the DB
+    const ticket = Ticket.build({
+        title: 'Test Ticket',
+        price: 20,
+    });
+    await ticket.save();
+
+    // Act
+    await request(app)
+        .post('/api/orders')
+        .set('Cookie', global.signin())
+        .send({
+            ticketId: ticket.id,
+        })
+        // Assert
+        .expect(201);
+
+    expect(natsWrapper.client.publish).toHaveBeenCalled;
+});
 
 it('passes all test for the createOrderRouter', async () => {
     console.log('Orders API:  createOrderRouter passed.');

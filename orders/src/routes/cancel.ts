@@ -9,6 +9,8 @@ import {
     OrderStatus,
 } from '@dr-wolf-at-npm/common-for-tix';
 import { Order } from '../models/order';
+import { OrderCancelledPublisher } from '../../events/publishers/order-cancelled-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -22,7 +24,7 @@ router.patch(
             throw new BadRequestError('Invalid Order ID');
         }
 
-        const order = await Order.findById(orderId);
+        const order = await Order.findById(orderId).populate('ticket');
 
         if (!order) {
             throw new NotFoundError();
@@ -34,6 +36,14 @@ router.patch(
         order.status = OrderStatus.Cancelled;
 
         await order.save();
+
+        // publish event:  order cancelled
+        new OrderCancelledPublisher(natsWrapper.client).publish({
+            id: order.id,
+            ticket: {
+                id: order.ticket.id,
+            },
+        });
 
         res.status(202).send(order);
     },
