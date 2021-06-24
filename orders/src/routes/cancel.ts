@@ -6,12 +6,13 @@ import {
     BadRequestError,
     NotFoundError,
     NotAuthorisedError,
+    OrderStatus,
 } from '@dr-wolf-at-npm/common-for-tix';
 import { Order } from '../models/order';
 
 const router = express.Router();
 
-router.get(
+router.patch(
     '/api/orders/:orderId',
     requireAuth,
     async (req: Request, res: Response) => {
@@ -21,7 +22,7 @@ router.get(
             throw new BadRequestError('Invalid Order ID');
         }
 
-        const order = await Order.findById(orderId).populate('ticket');
+        const order = await Order.findById(orderId);
 
         if (!order) {
             throw new NotFoundError();
@@ -30,8 +31,12 @@ router.get(
             throw new NotAuthorisedError();
         }
 
-        res.send(order);
+        order.status = OrderStatus.Cancelled;
+
+        await order.save();
+
+        res.status(202).send(order);
     },
 );
 
-export { router as showOrderRouter };
+export { router as cancelOrderRouter };

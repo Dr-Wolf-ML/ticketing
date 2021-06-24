@@ -122,8 +122,6 @@ it('reserves a ticket', async () => {
 
 it.todo('publishes a new order:created event');
 
-it('spare', async () => {});
-
 it('passes all test for the createOrderRouter', async () => {
     console.log('Orders API:  createOrderRouter passed.');
 });

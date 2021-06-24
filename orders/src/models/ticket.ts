@@ -47,7 +47,7 @@ ticketSchema.statics.build = (ticketDetails: TicketAttributes) => {
 
 ticketSchema.methods.isReserved = async function () {
     const exisitingOrder = await Order.findOne({
-        // this === the ticket document
+        // this === the ticket document instance
         //! @ts-ignore - why ??
         // @ts-ignore
         ticket: this,

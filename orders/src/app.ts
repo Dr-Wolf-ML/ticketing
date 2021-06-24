@@ -7,7 +7,7 @@ import cookieSession from 'cookie-session';
 import { createOrderRouter } from './routes/new';
 import { showOrderRouter } from './routes/show';
 import { indexOrderRouter } from './routes/index';
-import { deleteOrderRouter } from './routes/delete';
+import { cancelOrderRouter } from './routes/cancel';
 
 // from common NPM repo
 import {
@@ -31,7 +31,7 @@ app.use(currentUser);
 app.use(createOrderRouter);
 app.use(showOrderRouter);
 app.use(indexOrderRouter);
-app.use(deleteOrderRouter);
+app.use(cancelOrderRouter);
 
 // Bad Route - Page not found 404
 app.all('*', () => {
