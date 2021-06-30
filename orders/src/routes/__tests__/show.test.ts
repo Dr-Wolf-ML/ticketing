@@ -4,12 +4,15 @@ import mongoose from 'mongoose';
 import { app } from '../../app';
 import { Ticket } from '../../models/ticket';
 
+const validTicketId = mongoose.Types.ObjectId().toHexString();
+
 it('fetches the order', async () => {
     //* Arrange
     const cookie = global.signin();
 
     // create a ticket
     const ticket = Ticket.build({
+        id: validTicketId,
         title: 'Test Ticket',
         price: 20,
     });
@@ -49,6 +52,7 @@ it('returns a 404 if order is not found', async () => {
 
     // create a ticket
     const ticket = Ticket.build({
+        id: validTicketId,
         title: 'Test Ticket',
         price: 20,
     });
@@ -80,6 +84,7 @@ it('returns a 401 if the user is not authorised', async () => {
     //* Arrange
     // create a ticket
     const ticket = Ticket.build({
+        id: validTicketId,
         title: 'Test Ticket',
         price: 20,
     });
@@ -111,6 +116,7 @@ it('returns a 401 if the user is not signed in', async () => {
     //* Arrange
     // create a ticket
     const ticket = Ticket.build({
+        id: validTicketId,
         title: 'Test Ticket',
         price: 20,
     });
@@ -143,6 +149,7 @@ it('returns a 400 if the orderId is not a mongoose.Types.ObjectId', async () => 
 
     // create a ticket
     const ticket = Ticket.build({
+        id: validTicketId,
         title: 'Test Ticket',
         price: 20,
     });

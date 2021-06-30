@@ -7,6 +7,8 @@ import { Ticket } from '../../models/ticket';
 import { natsWrapper } from '../../nats-wrapper';
 import { OrderStatus } from '@dr-wolf-at-npm/common-for-tix';
 
+const validTicketId = mongoose.Types.ObjectId().toHexString();
+
 it('has a route handler listening to /api/tickets for order requests', async () => {
     const response = await request(app).post('/api/orders').send({});
 
@@ -23,6 +25,7 @@ it('returns a status 401 if the user is NOT signed in', async () => {
     // Arrange
     // - create a new Ticket and save it to the DB
     const ticket = Ticket.build({
+        id: validTicketId,
         title: 'Test Ticket',
         price: 20,
     });
@@ -74,6 +77,7 @@ it('returns a 400 if the ticket is already reserved', async () => {
     // Arrange
     // - create a new Ticket and save it to the DB
     const ticket = Ticket.build({
+        id: validTicketId,
         title: 'Test Ticket',
         price: 20,
     });
@@ -103,6 +107,7 @@ it('reserves a ticket', async () => {
     // Arrange
     // - create a new Ticket and save it to the DB
     const ticket = Ticket.build({
+        id: validTicketId,
         title: 'Test Ticket',
         price: 20,
     });
@@ -123,6 +128,7 @@ it('publishes a new order:created event', async () => {
     // Arrange
     // - create a new Ticket and save it to the DB
     const ticket = Ticket.build({
+        id: validTicketId,
         title: 'Test Ticket',
         price: 20,
     });

@@ -6,12 +6,15 @@ import { Ticket } from '../../models/ticket';
 import { natsWrapper } from '../../nats-wrapper';
 import { OrderStatus } from '@dr-wolf-at-npm/common-for-tix';
 
+const validTicketId = mongoose.Types.ObjectId().toHexString();
+
 it('markes an order as cancelled', async () => {
     //* Arrange
     const cookie = global.signin();
 
     // create a ticket
     const ticket = Ticket.build({
+        id: validTicketId,
         title: 'Test Ticket',
         price: 20,
     });
@@ -49,6 +52,7 @@ it('returns a 404 if order is not found', async () => {
 
     // create a ticket
     const ticket = Ticket.build({
+        id: validTicketId,
         title: 'Test Ticket',
         price: 20,
     });
@@ -80,6 +84,7 @@ it('returns a 401 if the user is not authorised', async () => {
     //* Arrange
     // create a ticket
     const ticket = Ticket.build({
+        id: validTicketId,
         title: 'Test Ticket',
         price: 20,
     });
@@ -111,6 +116,7 @@ it('returns a 401 if the user is not signed in', async () => {
     //* Arrange
     // create a ticket
     const ticket = Ticket.build({
+        id: validTicketId,
         title: 'Test Ticket',
         price: 20,
     });
@@ -143,6 +149,7 @@ it('returns a 400 if the orderId is not a mongoose.Types.ObjectId', async () => 
 
     // create a ticket
     const ticket = Ticket.build({
+        id: validTicketId,
         title: 'Test Ticket',
         price: 20,
     });
@@ -180,6 +187,7 @@ it('publishes an order:cancelled event', async () => {
 
     // create a ticket
     const ticket = Ticket.build({
+        id: validTicketId,
         title: 'Test Ticket',
         price: 20,
     });

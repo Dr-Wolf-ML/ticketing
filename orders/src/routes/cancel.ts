@@ -9,7 +9,7 @@ import {
     OrderStatus,
 } from '@dr-wolf-at-npm/common-for-tix';
 import { Order } from '../models/order';
-import { OrderCancelledPublisher } from '../../events/publishers/order-cancelled-publisher';
+import { OrderCancelledPublisher } from '../events/publishers/order-cancelled-publisher';
 import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
@@ -40,6 +40,7 @@ router.patch(
         // publish event:  order cancelled
         new OrderCancelledPublisher(natsWrapper.client).publish({
             id: order.id,
+            version: order.version,
             ticket: {
                 id: order.ticket.id,
             },

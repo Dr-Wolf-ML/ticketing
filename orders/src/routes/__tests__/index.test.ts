@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import request from 'supertest';
 
 import { app } from '../../app';
@@ -9,6 +10,7 @@ const createTicket = async () => {
     ticketCounter += 1;
 
     const ticket = Ticket.build({
+        id: mongoose.Types.ObjectId().toHexString(),
         title: `Test Ticket #${ticketCounter}`,
         price: 10 * ticketCounter,
     });
@@ -52,8 +54,6 @@ it('returns a list of all orders for a particular user', async () => {
         .get('/api/orders')
         .set('Cookie', user2)
         .expect(200);
-
-    console.log('ordersForUser2.body: ', ordersForUser2.body);
 
     //* Assert
     // make sure we only get orders for user #2

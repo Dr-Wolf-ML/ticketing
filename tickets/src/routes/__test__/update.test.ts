@@ -212,7 +212,7 @@ it('publishes an update ticket event', async () => {
     expect(natsWrapper.client.publish).toHaveBeenNthCalledWith(
         2,
         'ticket:updated',
-        `{\"id\":\"${response2.body.id}\",\"title\":\"${response2.body.title}",\"price\":${response2.body.price},\"userId\":\"${response2.body.userId}\"}`,
+        `{\"id\":\"${response2.body.id}\",\"version\":${response2.body.version},\"title\":\"${response2.body.title}",\"price\":${response2.body.price},\"userId\":\"${response2.body.userId}\"}`,
         expect.any(Function),
     );
 });

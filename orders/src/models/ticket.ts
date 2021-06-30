@@ -1,9 +1,16 @@
 import mongoose from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 import { Order, OrderStatus } from './order';
 
+interface EventIdentifier {
+    id: string;
+    version: number;
+}
+
 // props to create an Ticket
 interface TicketAttributes {
+    id: string;
     title: string;
     price: number;
 }
@@ -12,11 +19,13 @@ interface TicketAttributes {
 export interface TicketDoc extends mongoose.Document {
     title: string;
     price: number;
+    version: number;
     isReserved(): Promise<boolean>;
 }
 
 interface TicketModel extends mongoose.Model<TicketDoc> {
     build(ticketDetails: TicketAttributes): TicketDoc;
+    findTicketNextInSequence(event: EventIdentifier): Promise<TicketDoc | null>;
 }
 
 const ticketSchema = new mongoose.Schema(
@@ -41,16 +50,33 @@ const ticketSchema = new mongoose.Schema(
     },
 );
 
+ticketSchema.set('versionKey', 'version');
+ticketSchema.plugin(updateIfCurrentPlugin);
+
+ticketSchema.statics.findTicketNextInSequence = (event: {
+    id: string;
+    version: number;
+}) => {
+    return Ticket.findOne({
+        _id: event.id,
+        version: event.version - 1,
+    });
+};
+
 ticketSchema.statics.build = (ticketDetails: TicketAttributes) => {
-    return new Ticket(ticketDetails);
+    return new Ticket({
+        _id: ticketDetails.id,
+        title: ticketDetails.title,
+        price: ticketDetails.price,
+    });
 };
 
 ticketSchema.methods.isReserved = async function () {
+    const thisTicketDocumentInstance = this;
+
     const exisitingOrder = await Order.findOne({
-        // this === the ticket document instance
-        //! @ts-ignore - why ??
         // @ts-ignore
-        ticket: this,
+        ticket: thisTicketDocumentInstance,
         status: {
             $in: [
                 OrderStatus.Created,
