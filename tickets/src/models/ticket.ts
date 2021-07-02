@@ -9,11 +9,12 @@ interface TicketAttributes {
 }
 
 // describes the props of a Ticket document (a record in MongoDB)
-interface TicketDoc extends mongoose.Document {
+export interface TicketDoc extends mongoose.Document {
     title: string;
     price: number;
     userId: string;
     version: number;
+    orderId?: string;
 }
 
 // describes the props of a Ticket model with added .build function
@@ -34,6 +35,10 @@ const ticketSchema = new mongoose.Schema(
         userId: {
             type: String,
             required: true,
+        },
+        orderId: {
+            type: String,
+            required: false,
         },
     },
     {

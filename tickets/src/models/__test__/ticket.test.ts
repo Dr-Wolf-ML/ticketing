@@ -1,6 +1,6 @@
 import { Ticket } from '../ticket';
 
-it('implements optimistic concurrency control', async done => {
+it('implements optimistic concurrency control', async () => {
     // create a ticket
     const ticket = Ticket.build({
         title: 'Test Ticket',
@@ -34,8 +34,6 @@ it('implements optimistic concurrency control', async done => {
         expect(err.message).toContain('No matching document found');
         expect(err.version).toEqual(0);
     }
-
-    done();
 });
 
 it('increments the version number on multiple saves', async () => {

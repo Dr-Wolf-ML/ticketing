@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 
 import { app } from '../../app';
 import { natsWrapper } from '../../nats-wrapper';
+import { Ticket } from '../../models/ticket';
 
 it('returns a 404 if the provided id is does not exist', async () => {
     //* Arrange
@@ -215,6 +216,47 @@ it('publishes an update ticket event', async () => {
         `{\"id\":\"${response2.body.id}\",\"version\":${response2.body.version},\"title\":\"${response2.body.title}",\"price\":${response2.body.price},\"userId\":\"${response2.body.userId}\"}`,
         expect.any(Function),
     );
+});
+
+it('returns a 400 if the ticket is reserved', async () => {
+    //* Arrange
+    const cookie = global.signin();
+    const orderId = new mongoose.Types.ObjectId().toHexString();
+
+    // create ticket
+    const response = await request(app)
+        .post('/api/tickets')
+        .set('Cookie', cookie)
+        .send({
+            title: 'Test Title',
+            price: 10,
+        })
+        .expect(201);
+
+    // fetch the ticket and place orderId on it
+    const ticket = await Ticket.findById(response.body.id);
+    ticket!.set({ orderId });
+    await ticket!.save();
+
+    //* Act: attempt to update that ticket
+    const response2 = await request(app)
+        .put(`/api/tickets/${response.body.id}`)
+        .set('Cookie', cookie)
+        .send({
+            title: 'Updated Test Title',
+            price: 99,
+        });
+
+    //* Assert
+    expect(response2.statusCode).toEqual(400);
+
+    // fetch ticket again
+    const currentTicket = await Ticket.findById(response.body.id);
+
+    // Assert:  no changes
+    expect(currentTicket!.title).toEqual('Test Title');
+    expect(currentTicket!.price).toEqual(10);
+    expect(currentTicket!.orderId).toBeDefined();
 });
 
 it('passes all test for the updateTicketRouter', async () => {
