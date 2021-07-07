@@ -53,10 +53,7 @@ const ticketSchema = new mongoose.Schema(
 ticketSchema.set('versionKey', 'version');
 ticketSchema.plugin(updateIfCurrentPlugin);
 
-ticketSchema.statics.findTicketNextInSequence = (event: {
-    id: string;
-    version: number;
-}) => {
+ticketSchema.statics.findTicketNextInSequence = (event: EventIdentifier) => {
     return Ticket.findOne({
         _id: event.id,
         version: event.version - 1,

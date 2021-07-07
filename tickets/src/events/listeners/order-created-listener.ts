@@ -37,11 +37,13 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
         await ticket.save();
 
         // publish a ticket:updated event
-        // ticket === updatedTicket, except ticket.id of type TicketDoc is optional...
-        // ...but not in TicketUpdatedEvent['data'].  Hence...
         const updatedData: TicketUpdatedEvent['data'] = {
             id: ticket.id,
-            ...ticket,
+            price: ticket.price,
+            title: ticket.title,
+            userId: ticket.userId,
+            orderId: ticket.orderId,
+            version: ticket.version,
         };
 
         await new TicketUpdatedPublisher(this.client).publish(updatedData);

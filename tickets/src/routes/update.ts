@@ -35,6 +35,8 @@ router.put(
     async (req: Request, res: Response) => {
         const ticket = await Ticket.findById(req.params.id); //! req.params.id captures id from /:id
 
+        console.log('Ticket version b4 save: ', ticket?.version);
+
         if (!ticket) {
             throw new NotFoundError();
         }
@@ -53,6 +55,8 @@ router.put(
         });
 
         await ticket.save();
+
+        console.log('Ticket version after save: ', ticket?.version);
 
         new TicketUpdatedPublisher(natsWrapper.client).publish({
             id: ticket.id,
