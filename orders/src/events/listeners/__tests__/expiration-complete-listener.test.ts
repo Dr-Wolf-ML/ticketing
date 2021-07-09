@@ -79,6 +79,22 @@ it('ack the message', async () => {
     expect(msg.ack).toHaveBeenCalled();
 });
 
+it('does not cancel completed orders', async () => {
+    const { listener, order, data, msg } = await setup();
+
+    await listener.onMessage(data, msg);
+
+    order.set({
+        status: OrderStatus.Complete,
+        version: 1,
+    });
+    await order.save();
+
+    const updatedOrder = await Order.findById(order.id);
+
+    expect(updatedOrder!.status).toEqual(OrderStatus.Complete);
+});
+
 it('passes all test for the ExpirationCompleteListener', async () => {
     console.log('Orders API:  ExpirationCompleteListener passed.');
 });
