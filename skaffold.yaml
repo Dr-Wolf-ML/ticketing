@@ -24,8 +24,8 @@ build:
               manual:
                   - src: '**/*.js'
                     dest: .
-        - image: superclass2016/tickets
-          context: tickets
+        - image: superclass2016/expiration
+          context: expiration
           docker:
               dockerfile: Dockerfile
           sync:
@@ -40,8 +40,16 @@ build:
               manual:
                   - src: 'src/**/*.ts'
                     dest: .
-        - image: superclass2016/expiration
-          context: expiration
+        - image: superclass2016/payments
+          context: payments
+          docker:
+              dockerfile: Dockerfile
+          sync:
+              manual:
+                  - src: 'src/**/*.ts'
+                    dest: .
+        - image: superclass2016/tickets
+          context: tickets
           docker:
               dockerfile: Dockerfile
           sync:
