@@ -2,13 +2,14 @@ import mongoose from 'mongoose';
 import { Message } from 'node-nats-streaming';
 import { TicketCreatedEvent } from '@dr-wolf-at-npm/common-for-tix';
 import { TicketCreatedListener } from '../ticket-created-listener';
-import { natsWrapper } from '../../../nats-wrapper'; // this is not the mock
+import { natsWrapper } from '../../../__mocks__/nats-wrapper';
 import { Ticket } from '../../../models/ticket';
 
 const validMongoId = () => new mongoose.Types.ObjectId().toHexString();
 
 const setup = async () => {
     // create and instance of the listener
+    //@ts-ignore
     const listener = new TicketCreatedListener(natsWrapper.client);
 
     // create a fake data event

@@ -2,11 +2,12 @@ import mongoose from 'mongoose';
 import { Message } from 'node-nats-streaming';
 import { TicketUpdatedEvent } from '@dr-wolf-at-npm/common-for-tix';
 import { TicketUpdatedListener } from '../ticket-updated-listener';
-import { natsWrapper } from '../../../nats-wrapper'; // this is not the mock
+import { natsWrapper } from '../../../__mocks__/nats-wrapper';
 import { Ticket } from '../../../models/ticket';
 
 const setup = async () => {
     // create and instance of the listener
+    //@ts-ignore
     const listener = new TicketUpdatedListener(natsWrapper.client);
 
     // create a new ticket

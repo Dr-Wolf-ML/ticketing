@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "pwa-chrome",
+            "name": "http://--watch",
+            "request": "launch",
+            "url": "http://--watch"
+        }
+    ]
+}
