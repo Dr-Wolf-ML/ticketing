@@ -1,0 +1,62 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+    name: first-priority
+value: 1000000
+preemptionPolicy: PreemptLowerPriority
+globalDefault: false
+description: 'This is a first priority pod schedule class.'
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+    name: second-priority
+value: 900000
+preemptionPolicy: PreemptLowerPriority
+globalDefault: false
+description: 'This is a second priority pod schedule class.'
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+    name: third-priority
+value: 800000
+preemptionPolicy: PreemptLowerPriority
+globalDefault: false
+description: 'This is a third priority pod schedule class.'
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+    name: fourth-priority
+value: 700000
+preemptionPolicy: PreemptLowerPriority
+globalDefault: false
+description: 'This is a fourth priority pod schedule class.'
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+    name: fifth-priority
+value: 600000
+preemptionPolicy: PreemptLowerPriority
+globalDefault: false
+description: 'This is a fifth priority pod schedule class.'
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+    name: medium-priority-nonpreempting
+value: 200000
+preemptionPolicy: Never
+globalDefault: false
+description: 'This is a medium-nonpreempting priority pod schedule class.'
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+    name: low-priority-nonpreempting
+value: 100000
+preemptionPolicy: Never
+globalDefault: false
+description: 'This is a low-nonpreempting priority pod schedule class.'

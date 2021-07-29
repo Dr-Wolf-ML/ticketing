@@ -26,3 +26,16 @@ spec:
                         value: ticketing
                       - name: REDIS_HOST
                         value: expiration-redis-srv
+                  resources:
+                      requests:
+                          cpu: '100m'
+                          memory: '100Mi'
+                      limits:
+                          cpu: '150m'
+                          memory: '150Mi'
+            priorityClassName: third-priority
+            tolerations:
+                - key: ''
+                  operator: 'Exists'
+                  effect: 'NoExecute'
+                  tolerationSeconds: 120

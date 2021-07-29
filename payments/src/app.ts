@@ -1,9 +1,12 @@
+require('dotenv').config();
+
 import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 
 // Routing
+import { createChargeRouter } from './routes/new';
 
 // from common NPM repo
 import {
@@ -19,12 +22,13 @@ app.use(
     cookieSession({
         signed: false,
         secure: process.env.NODE_ENV !== 'test',
-    }),
+    })
 );
 
 app.use(currentUser);
 
 // init routers
+app.use(createChargeRouter);
 
 // Bad Route - Page not found 404
 app.all('*', () => {

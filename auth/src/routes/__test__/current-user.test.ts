@@ -3,7 +3,7 @@ import { app } from '../../app';
 
 it('responds with details about the current user', async () => {
     // Arrange
-    const cookie = await global.getCookie();
+    const cookie = await global.signin();
 
     // Act
     const currentUserResponse = await request(app)

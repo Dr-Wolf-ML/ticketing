@@ -23,7 +23,7 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
 
         if (!ticket) {
             throw new NotFoundError();
-        }
+        };
 
         const dataToBeSet = {
             id: ticket.id,

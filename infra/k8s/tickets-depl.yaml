@@ -31,6 +31,19 @@ spec:
                             secretKeyRef:
                                 name: jwt-secret
                                 key: JWT_KEY
+                  resources:
+                      requests:
+                          cpu: '200m'
+                          memory: '200Mi'
+                      limits:
+                          cpu: '250m'
+                          memory: '250Mi'
+            priorityClassName: fifth-priority
+            tolerations:
+                - key: ''
+                  operator: 'Exists'
+                  effect: 'NoExecute'
+                  tolerationSeconds: 120
 ---
 apiVersion: v1
 kind: Service

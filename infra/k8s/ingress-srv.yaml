@@ -7,14 +7,21 @@ metadata:
         nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
     rules:
-        - host: ticketing.dev
+        - host: 'ticketing.dev'
           http:
               paths:
-                  - path: /api/users/?(.*)
+                  - path: /api/orders/?(.*)
                     pathType: Prefix
                     backend:
                         service:
-                            name: auth-srv
+                            name: orders-srv
+                            port:
+                                number: 3000
+                  - path: /api/payments/?(.*)
+                    pathType: Prefix
+                    backend:
+                        service:
+                            name: payments-srv
                             port:
                                 number: 3000
                   - path: /api/tickets/?(.*)
@@ -24,11 +31,11 @@ spec:
                             name: tickets-srv
                             port:
                                 number: 3000
-                  - path: /api/orders/?(.*)
+                  - path: /api/users/?(.*)
                     pathType: Prefix
                     backend:
                         service:
-                            name: orders-srv
+                            name: auth-srv
                             port:
                                 number: 3000
                   - path: /?(.*)
@@ -38,3 +45,4 @@ spec:
                             name: client-srv
                             port:
                                 number: 3000
+# fix:  kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission

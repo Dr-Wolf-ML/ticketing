@@ -1,5 +1,11 @@
-import mongoose from 'mongoose';
+// Init & setup before importing { app }
+require('dotenv').config();
+import { startBugsnag } from './utils/bug-logger';
+console.info('Starting up Bugsnag for Auth Service...');
+startBugsnag();
 
+// Start the app
+import mongoose from 'mongoose';
 import { app } from './app';
 
 const start = async () => {
@@ -10,7 +16,7 @@ const start = async () => {
         console.error('No process.env.JWT_KEY found !!');
         console.error('Please run...');
         console.error(
-            '"kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<secretOrPrivateKey>"',
+            '"kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<secretOrPrivateKey>"'
         );
         throw new Error('No process.env.JWT_KEY found !!');
     }

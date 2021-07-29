@@ -1,9 +1,36 @@
-apiVersion: skaffold/v2beta15
+apiVersion: skaffold/v2beta19
 kind: Config
+metadata:
+    name: ticketing
 deploy:
     kubectl:
         manifests:
-            - ./infra/k8s/*
+            # - ./infra/k8s/*
+            #! run once only to install the client side load balancer
+            # - ./infra/k8s/ingress-nginx-load-balancer-depl.yaml
+            # init...
+            - ./infra/k8s/pod-schedule-priority-classes.yaml
+            - ./infra/k8s/ingress-srv.yaml
+            # - dashboard-adminuser.yaml
+            # first-priority
+            - ./infra/k8s/nats-depl.yaml
+            # second-priority
+            - ./infra/k8s/auth-depl.yaml
+            - ./infra/k8s/auth-mongo-depl.yaml
+            # # third-priority
+            - ./infra/k8s/expiration-depl.yaml
+            - ./infra/k8s/expiration-redis-depl.yaml
+            # # fourth-priority
+            - ./infra/k8s/payments-depl.yaml
+            - ./infra/k8s/payments-mongo-depl.yaml
+            # # fifth-priority
+            - ./infra/k8s/tickets-depl.yaml
+            - ./infra/k8s/tickets-mongo-depl.yaml
+            # # medium-priority-nonpreempting
+            - ./infra/k8s/client-depl.yaml
+            # # low-priority-nonpreempting
+            - ./infra/k8s/orders-depl.yaml
+            - ./infra/k8s/orders-mongo-depl.yaml
 build:
     local:
         push: false
