@@ -2,7 +2,6 @@ import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
-import Bugsnag from '@bugsnag/js';
 
 var addRequestId = require('express-request-id')();
 
@@ -16,10 +15,6 @@ import { signupRouter } from './routes/signup';
 import { errorHandler, NotFoundError } from '@dr-wolf-at-npm/common-for-tix';
 
 const app = express();
-
-// Bugsnag requestHandler: must be first middleware!!
-const bugSnag = Bugsnag.getPlugin('express')!;
-app.use(bugSnag.requestHandler);
 
 app.set('trust proxy', true);
 app.use(json());
@@ -44,8 +39,5 @@ app.all('*', async (req, res) => {
 });
 
 app.use(errorHandler);
-
-// Bugsnag errorHandler: must be last middleware!!
-app.use(bugSnag.errorHandler);
 
 export { app };
