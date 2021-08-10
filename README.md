@@ -9,7 +9,7 @@
 A Microservices app-template with NATS Streaming Server for a fully functional community ticket sales app. including
 
 -   native auth
--   an SSR frontend with Nect and React
+-   an SSR frontend with Next and React
 -   CRUD tickets
 -   CRUD orders
 -   manage payments with Stripe
