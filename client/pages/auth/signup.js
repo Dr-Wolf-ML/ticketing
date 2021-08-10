@@ -3,7 +3,7 @@ import Router from 'next/router';
 
 import useRequest from '../../hooks/use-request';
 
-export default () => {
+const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -17,7 +17,7 @@ export default () => {
         onSuccess: () => Router.push('/'),
     });
 
-    const onSubmit = async e => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
         doRequest();
@@ -32,7 +32,7 @@ export default () => {
                     value={email}
                     className="form-control"
                     placeholder="Enter email"
-                    onChange={e => {
+                    onChange={(e) => {
                         setEmail(e.target.value);
                     }}
                 />
@@ -42,7 +42,7 @@ export default () => {
                 <input
                     type="password"
                     value={password}
-                    onChange={e => {
+                    onChange={(e) => {
                         setPassword(e.target.value);
                     }}
                     className="form-control"
@@ -57,3 +57,5 @@ export default () => {
         </form>
     );
 };
+
+export default SignUp;

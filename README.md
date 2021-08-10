@@ -92,6 +92,18 @@ K9s screenshot:
 
 ---
 
+## Run the App (client) locally
+
+Since adding ticketing.dev to the /etc/hosts file, you can run the app in your browser (Chrome preferred) at ticketing.dev.
+
+The Chrome browser is likely to respond to that request with a privacy warning and blocking that site:
+
+![Chrome privacy warning](./read-me/images/chrome-warning.png)
+
+To resolve this issue, just click anywhere on the browser screen and type **"thisisunsafe"** and you're good to go!
+
+---
+
 ## **Reflections on Troubleshooting**
 
 ### **Deployments were failing with skaffold dev**

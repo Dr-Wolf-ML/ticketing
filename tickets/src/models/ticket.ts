@@ -15,6 +15,7 @@ export interface TicketDoc extends mongoose.Document {
     userId: string;
     version: number;
     orderId?: string;
+    wasPurchased?: string;
 }
 
 // describes the props of a Ticket model with added .build function
@@ -40,6 +41,10 @@ const ticketSchema = new mongoose.Schema(
             type: String,
             required: false,
         },
+        wasPurchased: {
+            type: Date,
+            required: false,
+        },
     },
     {
         toJSON: {
@@ -48,7 +53,7 @@ const ticketSchema = new mongoose.Schema(
                 delete ret._id;
             },
         },
-    },
+    }
 );
 
 ticketSchema.set('versionKey', 'version');

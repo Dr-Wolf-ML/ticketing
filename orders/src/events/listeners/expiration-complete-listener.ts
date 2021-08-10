@@ -10,7 +10,9 @@ import {
 import { Order } from '../../models/order';
 import { OrderCancelledPublisher } from '../publishers/order-cancelled-publisher';
 
-export class ExpirationCompleteListener extends Listener<ExpirationCompleteEvent> {
+export class ExpirationCompleteListener extends Listener<
+    ExpirationCompleteEvent
+> {
     readonly subject = Subjects.ExpirationComplete;
 
     queueGroupName = QueueGroupNames.OrdersService;
@@ -33,7 +35,7 @@ export class ExpirationCompleteListener extends Listener<ExpirationCompleteEvent
         await order.save();
 
         await new OrderCancelledPublisher(this.client).publish({
-            id: data.orderId,
+            id: order.id,
             version: order.version, // should always be 0 !!
             ticket: {
                 id: order.ticket.id,

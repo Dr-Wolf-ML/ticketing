@@ -20,6 +20,7 @@ export interface TicketDoc extends mongoose.Document {
     title: string;
     price: number;
     version: number;
+    wasPurchased?: string;
     isReserved(): Promise<boolean>;
 }
 
@@ -39,6 +40,10 @@ const ticketSchema = new mongoose.Schema(
             required: true,
             min: 0,
         },
+        wasPurchased: {
+            type: Date,
+            required: false,
+        },
     },
     {
         toJSON: {
@@ -47,7 +52,7 @@ const ticketSchema = new mongoose.Schema(
                 delete ret._id;
             },
         },
-    },
+    }
 );
 
 ticketSchema.set('versionKey', 'version');
