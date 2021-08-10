@@ -1,8 +1,5 @@
 // Init & setup before importing { app }
 require('dotenv').config();
-import { startBugsnag } from './utils/bug-logger';
-console.info('Starting up Bugsnag for Auth Service...');
-startBugsnag();
 
 // Start the app
 import mongoose from 'mongoose';
