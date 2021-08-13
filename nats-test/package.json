@@ -18,6 +18,6 @@
         "typescript": "^4.3.2"
     },
     "devDependencies": {
-        "trim-newlines": ">=3.0.1"
+        "trim-newlines": ">=4.0.2"
     }
 }
