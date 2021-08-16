@@ -8,7 +8,7 @@ import { OrderPurchasedListener } from './events/listeners/order-purchased-liste
 
 //* Ticketing Service start-up
 const start = async () => {
-    console.info('Starting up Tickets Service...');
+    console.info('Starting up Tickets Service....');
 
     // Check that a JWT_Key secret exists...
     if (!process.env.JWT_KEY) {
