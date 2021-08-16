@@ -7,7 +7,7 @@ import { OrderCancelledListener } from './events/listeners/order-cancelled-liste
 
 //* Payments Service start-up
 const start = async () => {
-    console.info('Starting up Payments Service......');
+    console.info('Starting up Payments Service...');
 
     // Check that a JWT_Key secret exists...
     if (!process.env.JWT_KEY) {
