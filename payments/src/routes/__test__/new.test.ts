@@ -79,9 +79,6 @@ it('returns a 400 when purchasing a cancelled order', async () => {
 });
 
 it('returns a 201 with valid inputs', async () => {
-    //! fix error in deployment testing
-    jest.setTimeout(60000);
-
     const userId = validMongoId();
     const price = Math.floor(Math.random() * 100000);
 
@@ -120,15 +117,9 @@ it('returns a 201 with valid inputs', async () => {
     expect(stripeCharge?.amount).toEqual(price * 100);
     expect(stripeCharge?.currency).toContain('usd');
     expect(stripeCharge?.payment_method_details?.card?.brand).toEqual('visa');
-
-    //! fix error in deployment testing
-    jest.setTimeout(5000);
 });
 
 it('returns a 400 if an invalid token is supplied', async () => {
-    //! fix error in deployment testing
-    jest.setTimeout(60000);
-
     const userId = validMongoId();
     const price = Math.floor(Math.random() * 100000);
 
@@ -156,15 +147,9 @@ it('returns a 400 if an invalid token is supplied', async () => {
     expect(response.body.errors[0].message).toEqual(
         "No such token: 'invalid-token'"
     );
-
-    //! fix error in deployment testing
-    jest.setTimeout(5000);
 });
 
 it('saves a payment to Payments', async () => {
-    //! fix error in deployment testing
-    jest.setTimeout(60000);
-
     const userId = validMongoId();
     const price = Math.floor(Math.random() * 100000);
 
@@ -196,9 +181,6 @@ it('saves a payment to Payments', async () => {
 
     // Assert
     expect(payment).not.toBeNull;
-
-    //! fix error in deployment testing
-    jest.setTimeout(5000);
 });
 
 it('publishes a payment:created event', async () => {
