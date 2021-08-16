@@ -11,6 +11,9 @@ jest.mock('../nats-wrapper');
 let mongo: MongoMemoryServer;
 
 beforeAll(async () => {
+    //! fix error in deployment testing
+    jest.setTimeout(60000);
+
     process.env.JWT_KEY = 'testingKey';
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -36,6 +39,9 @@ beforeEach(async () => {
 afterAll(async () => {
     await mongo.stop();
     await mongoose.connection.close();
+
+    //! fix error in deployment testing
+    jest.setTimeout(10000);
 });
 
 // a global function for auth
