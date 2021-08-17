@@ -7,7 +7,7 @@ import {
 
 //* Expiration Service start-up
 const start = async () => {
-    console.info('Starting up Expiration Service...');
+    console.info('Starting up Expiration Service....');
 
     if (!process.env.NATS_CLIENT_ID) {
         console.error(

@@ -10,7 +10,7 @@ import { TicketUpdatedListener } from './events/listeners/ticket-updated-listene
 
 //* Ticketing Service start-up
 const start = async () => {
-    console.info('Starting up Orders Service...');
+    console.info('Starting up Orders Service....');
 
     // Check that a JWT_Key secret exists...
     if (!process.env.JWT_KEY) {
