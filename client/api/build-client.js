@@ -6,8 +6,7 @@ const buildClient = ({ req }) => {
         // requests should be made to http://ingress-nginx-controller.ingress-nginx.svc.cluster.local
 
         return axios.create({
-            baseURL:
-                'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
+            baseURL: 'http://testing.superclass.online',
             headers: req.headers,
         });
     } else {
